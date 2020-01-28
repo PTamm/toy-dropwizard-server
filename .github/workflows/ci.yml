@@ -45,7 +45,7 @@ jobs:
 
         - name: Run system tests
           working-directory: .
-          run: pytests
+          run: pytest
 
         - name: Purge containers
           working-directory: .
