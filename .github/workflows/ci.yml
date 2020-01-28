@@ -24,4 +24,30 @@ jobs:
               working-directory: .
               run: ./gradlew test
 
+    system-test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v1
+
+        - name: Run Docker Compose
+          working-directory: .
+          run: docker-compose up -d --build
+
+        - uses: actions/setup-python@v1
+          with:
+              python-version: '3.7'
+        - run: pip install -U pytest requests
+
+
+#        - name: Install pytest and requests
+#          working-directory: .
+#          run: pip3 install -U pytest && pip3 install -U requests
+
+        - name: Run system tests
+          working-directory: .
+          run: pytests
+
+        - name: Purge containers
+          working-directory: .
+          run: docker-compose down
 
